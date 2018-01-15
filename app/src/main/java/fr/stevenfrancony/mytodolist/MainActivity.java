@@ -9,13 +9,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mListView;
     private List<Comment> mTweets;
+    private Comment mComment;
 
     private TextView mTextStatus;
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                mTweets.remove(position);
+                deleteOnePos(position);
                 refreshList();
             }
         });
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                mTweets = new ArrayList<Comment>();
+                deleteAll();
                 refreshList();
             }
         });
@@ -137,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 
                 if(name.length() > 0 || text.length() > 0) {
-                    mTweets.add(new Comment(color, name.getText().toString(), text.getText().toString()));
+                    mComment = new Comment(color, name.getText().toString(), text.getText().toString());
+                    AddItem(mComment);
                     refreshList();
                 }
             }
@@ -163,10 +167,88 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<Comment> generateData(){
-
+    private List<Comment> generateData() {
         mTweets = new ArrayList<>();
-        mTweets.add(new Comment(Color.BLACK, "Florent", "Aller chercher du café !"));
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String myData = myPrefs.getString("myTodoData",null);
+
+        if(myData != null)
+        {
+            try {
+                JSONArray jsonArray = new JSONArray(myData);
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String data  = jsonArray.getString(i);
+                    String[] splitData = data.split("\\.");
+                    mTweets.add(new Comment(Integer.parseInt(splitData[0]), splitData[1], splitData[2]));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            mComment = new Comment(Color.BLACK, "Florent", "Aller chercher du café !");
+            AddItem(mComment);
+        }
+
         return mTweets;
     }
+
+    private void deleteAll() {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        JSONArray jsonArray = new JSONArray();
+        mTweets = new ArrayList<Comment>();
+
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("myTodoData", jsonArray.toString());
+        editor.apply();
+    }
+
+    private void AddItem(Comment e) {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String myData = myPrefs.getString("myTodoData",null);
+
+        JSONArray jsonArray = null;
+        if(myData == null) {
+            jsonArray = new JSONArray();
+            jsonArray.put(e.getColor() + "." + e.getPseudo() + "." + e.getText());
+            mTweets.add(e);
+        }
+        else {
+            try {
+                jsonArray = new JSONArray(myData);
+
+                jsonArray.put(e.getColor() + "." + e.getPseudo() + "." + e.getText());
+                mTweets.add(e);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("myTodoData", jsonArray.toString());
+        editor.apply();
+    }
+
+    private void deleteOnePos(int pos) {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String myData = myPrefs.getString("myTodoData",null);
+
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(myData);
+
+            jsonArray.remove(pos);
+            mTweets.remove(pos);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("myTodoData", jsonArray.toString());
+        editor.apply();
+    }
+
 }
