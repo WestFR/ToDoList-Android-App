@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -73,17 +74,17 @@ public class MainActivity extends AppCompatActivity {
     private void deleteOne(int pos) {
         final int position = pos;
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Supprimer élément.");
-        alert.setMessage("Voulez-vous vraiment supprimer l'élement sélectionné ?");
+        alert.setTitle(R.string.deleteOne_title);
+        alert.setMessage(R.string.deleteOne_message);
 
-        alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.app_yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 deleteOnePos(position);
                 refreshList();
             }
         });
 
-        alert.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.app_no, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Canceled.
             }
@@ -113,15 +114,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Ajouter tâche.");
-        alert.setMessage("Compléter les informations pour ajouter une tâche à la liste.");
+        alert.setTitle(R.string.addOne_title);
+        alert.setMessage(R.string.addOne_message);
 
         // Create TextView
         final EditText name = new EditText (this);
-        name.setHint("Prénom...");
+        name.setHint(R.string.addOne_name);
 
         final EditText text = new EditText(this);
-        text.setHint("Tâche...");
+        text.setHint(R.string.addOne_task);
+
+        // Checkbox
+        final CheckBox importantCheck = new CheckBox(this);
+        importantCheck.setText(R.string.addOne_important);
 
         Context context = getApplicationContext();
         LinearLayout layout = new LinearLayout(context);
@@ -129,25 +134,34 @@ public class MainActivity extends AppCompatActivity {
 
         layout.addView(name);
         layout.addView(text);
+        layout.addView(importantCheck);
 
         alert.setView(layout);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.app_ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 // Random color & add to list
                 Random rnd = new Random();
                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 
+                String important;
+                if(importantCheck.isChecked()) {
+                    important = "y";
+                }
+                else {
+                    important = "n";
+                }
+
                 if(name.length() > 0 || text.length() > 0) {
-                    mComment = new Comment(color, name.getText().toString(), text.getText().toString());
+                    mComment = new Comment(color, name.getText().toString(), text.getText().toString(), important);
                     AddItem(mComment);
                     refreshList();
                 }
             }
         });
 
-        alert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.app_cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Canceled.
             }
@@ -160,10 +174,10 @@ public class MainActivity extends AppCompatActivity {
         mListView.setAdapter(adapter);
 
         if(mTweets.size() > 0 ) {
-            mTextStatus.setText("Voici votre liste de tâches :");
+            mTextStatus.setText(R.string.app_listNoEmpty);
         }
         else {
-            mTextStatus.setText("La liste ne contient aucun élément !");
+            mTextStatus.setText(R.string.app_listEmpty);
         }
     }
 
@@ -180,7 +194,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     String data  = jsonArray.getString(i);
                     String[] splitData = data.split("\\.");
-                    mTweets.add(new Comment(Integer.parseInt(splitData[0]), splitData[1], splitData[2]));
+
+                    mTweets.add(new Comment(Integer.parseInt(splitData[0]), splitData[1], splitData[2], splitData[3]));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -188,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            mComment = new Comment(Color.BLACK, "Florent", "Aller chercher du café !");
+            mComment = new Comment(Color.BLACK, "Florent", getString(R.string.app_example), "y");
             AddItem(mComment);
         }
 
@@ -199,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         JSONArray jsonArray = new JSONArray();
-        mTweets = new ArrayList<Comment>();
+        mTweets = new ArrayList<>();
 
         SharedPreferences.Editor editor = myPrefs.edit();
         editor.putString("myTodoData", jsonArray.toString());
@@ -228,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences.Editor editor = myPrefs.edit();
-        editor.putString("myTodoData", jsonArray.toString());
+        editor.putString("myTodoData", jsonArray != null ? jsonArray.toString() : null);
         editor.apply();
     }
 
@@ -247,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences.Editor editor = myPrefs.edit();
-        editor.putString("myTodoData", jsonArray.toString());
+        editor.putString("myTodoData", jsonArray != null ? jsonArray.toString() : null);
         editor.apply();
     }
 

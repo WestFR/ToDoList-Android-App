@@ -1,7 +1,10 @@
 package fr.stevenfrancony.mytodolist;
 
 import android.content.Context;
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +42,9 @@ public class RowAdapter extends ArrayAdapter<Comment> {
 
         Comment tweet = getItem(position);
 
+        if(tweet.getImportant() == "y")
+            viewHolder.text.setTextColor(Color.parseColor("#FF0000"));
+
         viewHolder.pseudo.setText(tweet.getPseudo());
         viewHolder.text.setText(tweet.getText());
         viewHolder.avatar.setImageDrawable(new ColorDrawable(tweet.getColor()));
@@ -57,11 +63,14 @@ class Comment {
     private int color;
     private String pseudo;
     private String text;
+    private String important;
 
-    public Comment(int color, String pseudo, String text) {
+
+    public Comment(int color, String pseudo, String text, String important) {
         this.color = color;
         this.pseudo = pseudo;
         this.text = text;
+        this.important = important;
     }
 
     public String getPseudo() {
@@ -75,5 +84,7 @@ class Comment {
     public int getColor() {
         return this.color;
     }
+
+    public String getImportant() { return this.important; }
 }
 

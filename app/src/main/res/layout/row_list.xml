@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:contentDescription="color"
+        android:contentDescription="@string/app_colortext"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:background="#AAA" />
@@ -30,5 +30,5 @@
         android:textColor="@android:color/black"
         android:layout_alignStart="@+id/pseudo"
         android:layout_below="@+id/pseudo"
-        tools:text="Texte de mon tweet" />
+        tools:text="Texte de ma tâche" />
 </RelativeLayout>

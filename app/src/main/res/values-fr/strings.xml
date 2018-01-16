@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="deleteOne_title">Supprimer élément.</string>
+    <string name="deleteOne_message">Voulez-vous vraiment supprimer l\'élement sélectionné ?</string>
+    <string name="app_yes">Oui</string>
+    <string name="app_no">Non</string>
+    <string name="app_cancel">Annuler</string>
+    <string name="addOne_title">Ajouter une tâche.</string>
+    <string name="addOne_message">Compléter les informations pour ajouter une tâche.</string>
+    <string name="addOne_name">Prénom...</string>
+    <string name="addOne_task">Tâche...</string>
+    <string name="addOne_important">Tâche importante</string>
+    <string name="app_listNoEmpty">Voici votre liste de tâches :</string>
+    <string name="app_listEmpty">La liste ne contient aucun élément !</string>
+    <string name="app_example">Aller chercher du café !</string>
+</resources>
