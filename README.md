@@ -33,7 +33,7 @@ This application not requires a network connection to work.
 If you just want to install this application on your device, follow this instructions.
 
 1. Download the .APK on this link : 
-`https://github.com/WestFR/ToDoList-Android/tree/master/app/app-build-debug/app-debug.apk`
+`https://github.com/WestFR/ToDoList-Android/tree/master/app-build-debug/app-debug.apk`
 
 2. Install this .APK on your device
 
