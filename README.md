@@ -23,12 +23,15 @@ This application not requires a network connection to work.
 - Android Studio 3.1+
 - Android 4.4+
 
+
 ## Usage
 
 If you just want to install this application on your device, follow this instructions.
 
 1. Download the .APK on this link : `https://github.com/WestFR/ToDoList-Android/tree/master/app/app-build-debug/app-debug.apk`
+
 2. Install this .APK on your device
+
 3. Enjoy (and put a star) !
 
 
