@@ -7,12 +7,15 @@
     <string name="app_yes">Yes</string>
     <string name="app_no">No</string>
     <string name="app_ok" translatable="false">Ok</string>
+    <string name="app_modify">Modify</string>
     <string name="app_cancel">Cancel</string>
     <string name="addOne_title">Add one task.</string>
     <string name="addOne_message">Complete the information to add a task.</string>
     <string name="addOne_name">Name...</string>
     <string name="addOne_task">Task...</string>
     <string name="addOne_important">Important task</string>
+    <string name="modifyOne_title">Modify task.</string>
+    <string name="modifyOne_message">Complete the information to modify this task.</string>
     <string name="app_listNoEmpty">Here is your list of tasks :</string>
     <string name="app_listEmpty">The list doesn\'t contain any element !</string>
     <string name="app_example">Go get some coffee !</string>

@@ -42,8 +42,13 @@ public class RowAdapter extends ArrayAdapter<Comment> {
 
         Comment tweet = getItem(position);
 
-        if(tweet.getImportant() == "y")
+        if(tweet.getImportant().equals("y")) {
             viewHolder.text.setTextColor(Color.parseColor("#FF0000"));
+        }
+
+        if(tweet.getImportant().equals("n")) {
+            viewHolder.text.setTextColor(Color.parseColor("#000000"));
+        }
 
         viewHolder.pseudo.setText(tweet.getPseudo());
         viewHolder.text.setText(tweet.getText());

@@ -13,4 +13,7 @@
     <string name="app_listNoEmpty">Here is your list of tasks :</string>
     <string name="app_listEmpty">The list doesn\'t contain any element !</string>
     <string name="app_example">Go get some coffee !</string>
+    <string name="modifyOne_title">Modify task.</string>
+    <string name="modifyOne_message">Complete the information to modify this task.</string>
+    <string name="app_modify">Modify</string>
 </resources>

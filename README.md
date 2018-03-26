@@ -10,11 +10,15 @@ You can also mark as "Finished" the whole of your list of tasks and thus empty y
 
 This application not requires a network connection to work.
 
+<img src="screens/1-Home.png" width="250">  <img src="screens/2-Create.png" width="250">  <img src="screens/3-Modify.png" width="250">
+
 
 ## Features
 
-- [x] Simple ToDo List (with important tasks or not)
-- [x] Ready to Publish
+- [x] Simple ToDo List (with important tasks or not).
+- [x] Simple press to modify a task.
+- [x] Long press to delete a task.
+- [x] Ready to Publish.
 - [x] 2 languages : English & French.
 
 
@@ -28,14 +32,15 @@ This application not requires a network connection to work.
 
 If you just want to install this application on your device, follow this instructions.
 
-1. Download the .APK on this link : `https://github.com/WestFR/ToDoList-Android/tree/master/app/app-build-debug/app-debug.apk`
+1. Download the .APK on this link : 
+`https://github.com/WestFR/ToDoList-Android/tree/master/app/app-build-debug/app-debug.apk`
 
 2. Install this .APK on your device
 
-3. Enjoy (and put a star) !
+3. Enjoy and put a star !
 
 
-## Installation (for develop)
+## Installation (for developers)
 
 1. Clone this project in your project folder : `git clone https://github.com/WestFR/ToDoList-Android`
 

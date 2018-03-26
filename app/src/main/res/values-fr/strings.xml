@@ -13,4 +13,7 @@
     <string name="app_listNoEmpty">Voici votre liste de tâches :</string>
     <string name="app_listEmpty">La liste ne contient aucun élément !</string>
     <string name="app_example">Aller chercher du café !</string>
+    <string name="modifyOne_title">Modifier tâche.</string>
+    <string name="modifyOne_message">Compléter les informations pour modifier cette tâche.</string>
+    <string name="app_modify">Modifier</string>
 </resources>
